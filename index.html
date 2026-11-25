@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d0b1a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Sobrenatural" />
+  <title>Como se Tornar Sobrenatural · Áudios</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div class="hero-top">
+        <span class="badge-book">Dr. Joe Dispenza</span>
+        <button id="btn-offline-all" class="btn-ghost-sm" type="button" title="Salvar todos os áudios para ouvir sem internet">
+          <span class="icon-dl">↓</span> <span id="offline-all-label">Salvar offline</span>
+        </button>
+      </div>
+      <h1>Como se Tornar Sobrenatural</h1>
+      <p class="subtitle">Estudo em áudio · 15 capítulos + bônus</p>
+
+      <div class="overall-progress-wrap">
+        <div class="overall-progress-meta">
+          <span id="overall-count">0 de 16 concluídos</span>
+          <span id="overall-percent">0%</span>
+        </div>
+        <div class="progress-track">
+          <div id="overall-bar" class="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+    </header>
+
+    <section id="resume-card" class="resume-card hidden" aria-label="Continuar ouvindo">
+      <div class="resume-label">Continuar de onde parou</div>
+      <div class="resume-title" id="resume-chapter-title">Intro · Visão Geral da Obra</div>
+      <div class="resume-sub" id="resume-episode-title">Como seus pensamentos alteram sua biologia</div>
+      <div class="resume-footer">
+        <span class="resume-time" id="resume-time">00:00</span>
+        <button id="btn-resume-play" class="btn-primary-pill" type="button">
+          ▶ Continuar
+        </button>
+      </div>
+    </section>
+
+    <main class="chapters-section">
+      <div class="section-header">
+        <h2>Capítulos</h2>
+        <span class="hint-text">Progresso salvo automaticamente</span>
+      </div>
+      <ul id="chapters-list" class="chapters-list"></ul>
+    </main>
+  </div>
+
+  <!-- Mini Player Fixo -->
+  <div id="mini-player" class="mini-player hidden">
+    <div class="mini-progress-track">
+      <div id="mini-progress-fill" class="mini-progress-fill" style="width: 0%"></div>
+    </div>
+    <div class="mini-content" id="mini-open-area">
+      <div class="mini-info">
+        <div class="mini-chap" id="mini-chap">Intro</div>
+        <div class="mini-title" id="mini-title">Selecione um capítulo</div>
+      </div>
+      <div class="mini-actions">
+        <button id="mini-rew" class="btn-icon-sm" type="button" aria-label="Voltar 15 segundos">-15s</button>
+        <button id="mini-play" class="btn-play-circle" type="button" aria-label="Reproduzir ou pausar">▶</button>
+        <button id="mini-fwd" class="btn-icon-sm" type="button" aria-label="Avançar 30 segundos">+30s</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Player Expandido (Modal Bottom Sheet) -->
+  <div id="full-player" class="full-player hidden" role="dialog" aria-modal="true" aria-label="Reprodutor de áudio">
+    <div class="full-header">
+      <button id="btn-close-full" class="btn-icon-round" type="button" aria-label="Minimizar player">⌄</button>
+      <span class="full-header-label">Ouvindo agora</span>
+      <button id="btn-mark-done" class="btn-ghost-sm" type="button">✓ Concluir</button>
+    </div>
+
+    <div class="full-artwork">
+      <div class="artwork-glow"></div>
+      <div class="artwork-card">
+        <div class="artwork-kicker" id="full-chap-tag">Intro</div>
+        <div class="artwork-book" id="full-chap-name">Visão Geral da Obra</div>
+        <div class="artwork-author">Becoming Supernatural</div>
+      </div>
+    </div>
+
+    <div class="full-meta">
+      <h2 id="full-episode-title">Como seus pensamentos alteram sua biologia</h2>
+      <p id="full-chap-subtitle">Intro · Visão Geral da Obra</p>
+    </div>
+
+    <div class="scrubber-wrap">
+      <input id="seek-slider" type="range" min="0" max="100" value="0" step="0.1" aria-label="Posição do áudio" />
+      <div class="time-row">
+        <span id="time-current">00:00</span>
+        <span id="time-duration">--:--</span>
+      </div>
+    </div>
+
+    <div class="controls-main">
+      <button id="btn-prev" class="btn-ctrl-sec" type="button" aria-label="Capítulo anterior">⏮</button>
+      <button id="btn-rew" class="btn-ctrl-skip" type="button" aria-label="Voltar 15 segundos">↺ 15s</button>
+      <button id="btn-play-main" class="btn-play-large" type="button" aria-label="Reproduzir ou pausar">▶</button>
+      <button id="btn-fwd" class="btn-ctrl-skip" type="button" aria-label="Avançar 30 segundos">30s ↻</button>
+      <button id="btn-next" class="btn-ctrl-sec" type="button" aria-label="Próximo capítulo">⏭</button>
+    </div>
+
+    <div class="controls-extras">
+      <button id="btn-speed" class="chip-btn" type="button">Velocidade: 1.0x</button>
+      <button id="btn-sleep" class="chip-btn" type="button">Sono: Off</button>
+      <button id="btn-autoplay" class="chip-btn active" type="button">Contínuo: On</button>
+    </div>
+  </div>
+
+  <audio id="audio-el" preload="metadata"></audio>
+  <script src="app.js"></script>
+</body>
+</html>
